@@ -6,3 +6,4 @@ def do_ntp():
 
 if __name__ == "__main__":
     do_ntp()
+

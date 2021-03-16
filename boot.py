@@ -8,8 +8,9 @@ gc.collect()
 import wifi
 wifi.do_connect()
 
-import ntp
-ntp.do_ntp()
+#import ntp
+#ntp.do_ntp()
 
-import webrepl
-webrepl.start()
+#import webrepl
+#webrepl.start()
+

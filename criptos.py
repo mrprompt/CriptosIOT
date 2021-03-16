@@ -1,33 +1,46 @@
-def do_criptos():
+def do_criptos(moeda):
     import urequests as requests
-    from config import CRIPTOS
 
-    moedas = []
-
-    for moeda in CRIPTOS:
-        """
-        {
-            'ticker': {
-                    'high': 14481.47000000,
-                    'low': 13706.00002000,
-                    'vol': 443.73564488,
-                    'last': 14447.01000000,
-                    'buy': 14447.00100000,
-                    'sell': 14447.01000000,
-                    'date': 1502977646
-                }
-        }
-        """
-        response = requests.get('https://www.mercadobitcoin.net/api/{}/ticker/'.format(moeda))
+    """
+    {
+        "symbol": "BTCBRL",
+        "priceChange": "-15970.00000000",
+        "priceChangePercent": "-4.726",
+        "weightedAvgPrice": "324399.27840539",
+        "prevClosePrice": "337918.00000000",
+        "lastPrice": "321948.00000000",
+        "lastQty": "0.00035800",
+        "bidPrice": "321521.00000000",
+        "bidQty": "0.00893300",
+        "askPrice": "321925.00000000",
+        "askQty": "0.16552600",
+        "openPrice": "337918.00000000",
+        "highPrice": "344150.00000000",
+        "lowPrice": "313000.00000000",
+        "volume": "293.13333400",
+        "quoteVolume": "95092242.02616700",
+        "openTime": 1615757622491,
+        "closeTime": 1615844022491,
+        "firstId": 2483667,
+        "lastId": 2523977,
+        "count": 40311
+    }
+    """
+    
+    try:
+        # response = requests.get('https://vapi.binance.com/api/v3/ticker/price?symbol={}'.format(moeda))
+        response = requests.get('https://api.binance.com/api/v3/ticker/24hr?symbol={}'.format(moeda))
         currency = response.json()
-        value = {'moeda': moeda, 'compra': currency['ticker']['buy'], 'venda': currency['ticker']['sell']}
-
-        moedas.append(value)
-
-    return moedas
+        value = {'moeda': moeda, 'compra': currency['askPrice'], 'venda': currency['bidPrice']}
+        
+        return value
+    except Exception:
+        print(response.text)
+        pass
 
 
 if __name__ == "__main__":
-    criptos = do_criptos()
+    criptos = do_criptos('BTCBRL')
     
     print(criptos)
+
